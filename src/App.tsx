@@ -1,7 +1,7 @@
-import { Box, Button, Collapsible, Grommet, Heading, ResponsiveContext } from 'grommet';
 import React, { Component } from 'react';
+import { Box, Button, Collapsible, Grommet, Heading, ResponsiveContext, Layer } from 'grommet';
 import { AppBar } from './app-bar';
-const { Notification } = require('grommet-icons');
+const { Notification, FormClose } = require('grommet-icons');
 
 const theme = {
   global: {
@@ -34,7 +34,8 @@ class App extends Component<{}> {
               {this.getAppBar()}
               <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
                 {this.getBody()}
-                {size !== 'small' && this.getSidebar()}
+                {this.state.showSidebar && size !== 'small' && this.getSidebar()}
+                {this.state.showSidebar && size === 'small' && this.getLayerSideBar()}
               </Box>
             </Box>
           )}
@@ -58,13 +59,37 @@ class App extends Component<{}> {
       app body
     </Box>;
 
-
   private getSidebar = (): React.ReactNode =>
     <Collapsible direction="horizontal" open={this.state.showSidebar}>
-      <Box flex width='medium' background='light-2' elevation='small' align='center' justify='center'>
+      <Box flex width='small' background='light-2' elevation='small' align='center' justify='center'>
         sidebar
       </Box>
     </Collapsible>;
+
+  private getLayerSideBar = (): React.ReactNode =>
+    <Layer
+      onEsc={this.toggleSidebar}>
+      <Box
+        background='light-2'
+        tag='header'
+        justify='end'
+        align='center'
+        direction='row'
+      >
+        <Button
+          icon={<FormClose />}
+          onClick={this.toggleSidebar}
+        />
+      </Box>
+      <Box
+        fill
+        background='light-2'
+        align='center'
+        justify='center'
+      >
+        sidebar
+      </Box>
+    </Layer>
 }
 
 export default App;
