@@ -6,10 +6,11 @@ import { Layer } from 'grommet/components/Layer';
 import { Button } from 'grommet/components/Button';
 import { FormField } from 'grommet/components/FormField';
 import { TextInput } from 'grommet/components/TextInput';
-import axios from 'axios';
-import { log } from 'util';
+import { Server, withServer } from './api/graphql';
 
-export const Login: React.SFC<{}> = () => {
+interface LoginProps { server: Server }
+
+const RowLogin: React.SFC<LoginProps> = ({ server }) => {
   const [login, setLogin] = useState("");
   const onLoginChange = useCallback(
     (...args: any[]) => setLogin(args[0].target.value),
@@ -20,8 +21,13 @@ export const Login: React.SFC<{}> = () => {
     (...args: any[]) => setPassword(args[0].target.value),
     [password]);
 
+  const onLogin = useCallback(
+    (...args: any[]) => server.login("", "").then(console.log),
+    [login, password]);
+
+
   const onRegister = useCallback(
-    (...args: any[]) => register(),
+    (...args: any[]) => server.register("", "").then(console.log),
     [login, password]);
 
 
@@ -45,7 +51,7 @@ export const Login: React.SFC<{}> = () => {
             <FormField label='Password'>
               <TextInput type="password" onChange={onPasswordChange} value={password} />
             </FormField>
-            <Button label="Login" primary margin={{ top: "small" }} />
+            <Button label="Login" primary margin={{ top: "small" }} onClick={onLogin} />
           </Box>
 
           <Box
@@ -64,15 +70,4 @@ export const Login: React.SFC<{}> = () => {
   );
 }
 
-async function register() {
-  const client = axios.create({
-    url: 'https://fakerql.com/graphql'
-  });
-  const foo = await client.post('https://fakerql.com/graphql', {
-    query: `mutation {
-      login(email:"franck.ledoux.progmail.com",password:"foo") {token}
-    }`
-  });
-  console.log('token', foo.data.data.login.token);
-
-}
+export const Login = withServer(RowLogin);
