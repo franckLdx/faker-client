@@ -7,7 +7,7 @@ import { Button } from 'grommet/components/Button';
 import { FormField } from 'grommet/components/FormField';
 import { TextInput } from 'grommet/components/TextInput';
 import { Server, withServer } from './data/graphql';
-import { useLoginToken } from './data/login';
+import { useLoginToken } from './data/data';
 
 interface LoginProps { server: Server }
 

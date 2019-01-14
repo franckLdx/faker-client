@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useContext } from 'react';
 
 export class Server {
   private client = axios.create({
@@ -26,18 +26,18 @@ export class Server {
 }
 
 export const server = new Server();
-const { Provider: ServiceProvider, Consumer: ServiceConsumer } = React.createContext(server);
 
-export { ServiceProvider }
+const ServiceContext = React.createContext(server);
 
-export function withServer<T extends { server: Server }>(Component: React.ComponentType<T>) {
+const ServiceProvider = ServiceContext.Provider
+
+function withServer<T extends { server: Server }>(Component: React.ComponentType<T>) {
   type ComponentOnwProps = Exclude<T, 'server'>;
-  return (props: ComponentOnwProps) => (
-    <ServiceConsumer>
-      {server => {
-        const injectedProps: T = { ...props, server };
-        return <Component {...injectedProps} />
-      }
-      }</ServiceConsumer>
-  )
+  return (props: ComponentOnwProps) => {
+    const server = useContext(ServiceContext);
+    const injectedProps: T = { ...props, server };
+    return <Component {...injectedProps} />
+  };
 }
+
+export { ServiceProvider, withServer }
