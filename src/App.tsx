@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Routes } from './routes';
 import { Grommet } from 'grommet/components/Grommet';
 import { Box } from 'grommet/components/Box';
-import { ServiceProvider, server } from './api/graphql';
+import { ServiceProvider, server } from './data/graphql';
 
 const theme = {
   global: {

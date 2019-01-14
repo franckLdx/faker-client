@@ -6,7 +6,8 @@ import { Layer } from 'grommet/components/Layer';
 import { Button } from 'grommet/components/Button';
 import { FormField } from 'grommet/components/FormField';
 import { TextInput } from 'grommet/components/TextInput';
-import { Server, withServer } from './api/graphql';
+import { Server, withServer } from './data/graphql';
+import { useLoginToken } from './data/login';
 
 interface LoginProps { server: Server }
 
@@ -21,15 +22,15 @@ const RowLogin: React.SFC<LoginProps> = ({ server }) => {
     (...args: any[]) => setPassword(args[0].target.value),
     [password]);
 
-  const onLogin = useCallback(
-    (...args: any[]) => server.login("", "").then(console.log),
-    [login, password]);
+  const [, setToken] = useLoginToken();
 
+  const onLogin = useCallback(
+    (...args: any[]) => server.login("", "").then(setToken),
+    [login, password]);
 
   const onRegister = useCallback(
-    (...args: any[]) => server.register("", "").then(console.log),
+    (...args: any[]) => server.register("", "").then(setToken),
     [login, password]);
-
 
   return (
     <Layer full plain modal margin="small" >
