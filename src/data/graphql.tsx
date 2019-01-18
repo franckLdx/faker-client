@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
+import { Product, Todo } from './model';
 
 export class Server {
   private client = axios.create({
@@ -31,9 +32,15 @@ export class Server {
     });
     return response.data.data.allProducts as T[];
   }
-}
 
-export interface Product { id: string, name: string, price: string }
+  async getTodos<T extends Partial<Todo>>(...fields: (keyof T)[]): Promise<T[]> {
+    const query = `{allTodos{${fields.join(',')}}}`;
+    const response = await this.client.post('', {
+      query
+    });
+    return response.data.data.allTodos as T[];
+  }
+}
 
 export const server = new Server();
 
@@ -41,7 +48,7 @@ const ServiceContext = React.createContext(server);
 
 const ServiceProvider = ServiceContext.Provider
 
-interface WithServerProps {
+export interface WithServerProps {
   server: Server
 }
 

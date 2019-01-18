@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { Server, server, Product, withServer } from '../data/graphql';
+import { Server, server, withServer } from '../data/graphql';
 import { DataTable } from 'grommet';
-import { start } from 'repl';
+import { Product } from '../data/model';
 
 interface ProductsRowProps {
   server: Server
 }
 
-type HomeProduct = Pick<Product, "name" | "price">;
+type OwnProduct = Pick<Product, "name" | "price">;
 
-const ProductsRow: React.SFC<ProductsRowProps> = () => {
-  const [products, setProducts] = React.useState([] as Array<HomeProduct>);
+const ProductsRow: React.SFC<ProductsRowProps> = ({ server }) => {
+  const [products, setProducts] = React.useState([] as Array<OwnProduct>);
 
   React.useEffect(() => {
     server.getProducts("name", "price")
-      .then(products => setProducts(products as Array<HomeProduct>));
+      .then(products => setProducts(products as Array<OwnProduct>));
   }, []);
 
   return <DataTable
