@@ -1,4 +1,4 @@
-Uses [https://v2.grommet.io/](Grommet)
+This projects Uses [https://v2.grommet.io/](Grommet) and React Hooks (at this timeofwritting Hooks are not available into official React release, so that the projects depends a React aplha version).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

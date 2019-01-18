@@ -6,8 +6,8 @@ import { Layer } from 'grommet/components/Layer';
 import { Button } from 'grommet/components/Button';
 import { FormField } from 'grommet/components/FormField';
 import { TextInput } from 'grommet/components/TextInput';
-import { Server, withServer2 } from './data/graphql';
-import { useLoginToken } from './data/data';
+import { Server, withServer } from '../data/graphql';
+import { useLoginToken } from '../data/data';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface LoginProps { server: Server }
@@ -79,4 +79,4 @@ const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history
   );
 }
 
-export const Login = withRouter(withServer2(RowLogin));
+export const Login = withRouter(withServer(RowLogin));

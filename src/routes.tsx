@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Switch, Route, RouteComponentProps, Redirect } from 'react-router';
-import { Login } from './login';
+import { Login } from './components/login';
 import { useLoginToken } from './data/data';
-import { Home } from './home';
+import { Home } from './components/home';
 
 export const Routes: React.SFC<{}> = () => (
   <Switch>

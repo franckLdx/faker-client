@@ -57,4 +57,4 @@ function withServer<T extends WithServerProps>(Component: React.ComponentType<T>
   return wrappedComponent;
 }
 
-export { ServiceProvider, withServer as withServer2 }
+export { ServiceProvider, withServer }
