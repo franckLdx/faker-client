@@ -6,12 +6,13 @@ import { Layer } from 'grommet/components/Layer';
 import { Button } from 'grommet/components/Button';
 import { FormField } from 'grommet/components/FormField';
 import { TextInput } from 'grommet/components/TextInput';
-import { Server, withServer } from './data/graphql';
+import { Server, withServer2 } from './data/graphql';
 import { useLoginToken } from './data/data';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface LoginProps { server: Server }
 
-const RowLogin: React.SFC<LoginProps> = ({ server }) => {
+const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history }) => {
   const [login, setLogin] = useState("");
   const onLoginChange = useCallback(
     (...args: any[]) => setLogin(args[0].target.value),
@@ -24,12 +25,19 @@ const RowLogin: React.SFC<LoginProps> = ({ server }) => {
 
   const [, setToken] = useLoginToken();
 
+  const onLoggedIn = useCallback(
+    (newToken: string) => {
+      setToken(newToken);
+      history.push("/");
+    }, []
+  );
+
   const onLogin = useCallback(
-    (...args: any[]) => server.login("", "").then(setToken),
+    (...args: any[]) => server.login("", "").then(onLoggedIn),
     [login, password]);
 
   const onRegister = useCallback(
-    (...args: any[]) => server.register("", "").then(setToken),
+    (...args: any[]) => server.register("", "").then(onLoggedIn),
     [login, password]);
 
   return (
@@ -71,4 +79,4 @@ const RowLogin: React.SFC<LoginProps> = ({ server }) => {
   );
 }
 
-export const Login = withServer(RowLogin);
+export const Login = withRouter(withServer2(RowLogin));
