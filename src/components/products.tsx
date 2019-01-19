@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { Server, server, withServer } from '../data/graphql';
-import { DataTable } from 'grommet';
+import { withServer, WithServerProps } from '../data/graphql';
 import { Product } from '../data/model';
-
-interface ProductsRowProps {
-  server: Server
-}
+import { Draggable } from './draggable';
+import { Table } from './table';
 
 type OwnProduct = Pick<Product, "name" | "price">;
 
-const ProductsRow: React.SFC<ProductsRowProps> = ({ server }) => {
+const ProductsRow: React.SFC<WithServerProps> = ({ server }) => {
   const [products, setProducts] = React.useState([] as Array<OwnProduct>);
 
   React.useEffect(() => {
@@ -17,11 +14,14 @@ const ProductsRow: React.SFC<ProductsRowProps> = ({ server }) => {
       .then(products => setProducts(products as Array<OwnProduct>));
   }, []);
 
-  return <DataTable
-    columns={columns}
-    data={products}
-    sortable={true}
-  />;
+  return (
+    <Draggable title="Products">
+      <Table
+        columns={columns}
+        data={products}
+      />
+    </Draggable>
+  );
 
 }
 

@@ -2,6 +2,8 @@ import * as React from 'react'
 import { WithServerProps, withServer } from '../data/graphql';
 import { Todo } from '../data/model';
 import { DataTable } from 'grommet/components/DataTable';
+import { Draggable } from './draggable';
+import { Table } from './table';
 
 const TodosRow: React.SFC<WithServerProps> = ({ server }) => {
   const [todos, setTodos] = React.useState([] as Array<Todo>);
@@ -14,11 +16,12 @@ const TodosRow: React.SFC<WithServerProps> = ({ server }) => {
     []
   );
   return (
-    <DataTable
-      columns={columns}
-      data={todos}
-      sortable={true}
-    />
+    <Draggable title="Todos">
+      <Table
+        columns={columns}
+        data={todos}
+      />
+    </Draggable>
   );
 }
 

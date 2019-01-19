@@ -9,6 +9,7 @@ import { TextInput } from 'grommet/components/TextInput';
 import { Server, withServer } from '../data/graphql';
 import { useLoginToken } from '../data/data';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { backgroundPage, backgroundComponent } from '../data/theme';
 
 interface LoginProps { server: Server }
 
@@ -40,9 +41,11 @@ const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history
     (...args: any[]) => server.register("", "").then(onLoggedIn),
     [login, password]);
 
+  const formValid = login && password;
+
   return (
     <Layer full plain modal margin="small" >
-      <Box fill direction="column" background="light-3" align="center" justify="center">
+      <Box fill direction="column" background={backgroundPage} align="center" justify="center">
         <Box direction="column" align="center" justify="center" overflow="auto">
           <Heading level="1">Faker Client</Heading>
 
@@ -52,7 +55,7 @@ const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history
             margin={{ top: "medium" }}
             pad="small"
             elevation="medium"
-            background="light-1"
+            background={backgroundComponent}
           >
             <FormField label='Login'>
               <TextInput onChange={onLoginChange} value={login} />
@@ -60,7 +63,13 @@ const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history
             <FormField label='Password'>
               <TextInput type="password" onChange={onPasswordChange} value={password} />
             </FormField>
-            <Button label="Login" primary margin={{ top: "small" }} onClick={onLogin} />
+            <Button
+              label="Login"
+              primary
+              margin={{ top: "small" }}
+              onClick={onLogin}
+              disabled={!formValid}
+            />
           </Box>
 
           <Box
@@ -71,7 +80,12 @@ const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history
             elevation="medium"
             background="light-1">
             <Text>Not registered Yet?</Text>
-            <Button label="Register" margin={{ top: "xsmall" }} onClick={onRegister} />
+            <Button
+              label="Register"
+              margin={{ top: "xsmall" }}
+              onClick={onRegister}
+              disabled={!formValid}
+            />
           </Box>
         </Box>
       </Box>
