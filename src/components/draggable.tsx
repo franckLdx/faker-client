@@ -10,7 +10,7 @@ export interface DraggeableProps {
 }
 
 export const Draggable: React.SFC<DraggeableProps> = ({ title, children }) => (
-  <Box background={backgroundComponent} pad="5" border="all" elevation="xlarge">
+  <Box background={backgroundComponent} pad="5" border="all">
     <Heading level="3" textAlign="center">{title}</Heading>
     {children}
   </Box>

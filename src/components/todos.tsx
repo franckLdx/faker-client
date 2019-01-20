@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { WithServerProps, withServer } from '../data/graphql';
 import { Todo } from '../data/model';
-import { DataTable } from 'grommet/components/DataTable';
 import { Draggable } from './draggable';
 import { Table } from './table';
 

@@ -4,14 +4,12 @@ import { Product } from '../data/model';
 import { Draggable } from './draggable';
 import { Table } from './table';
 
-type OwnProduct = Pick<Product, "name" | "price">;
-
 const ProductsRow: React.SFC<WithServerProps> = ({ server }) => {
-  const [products, setProducts] = React.useState([] as Array<OwnProduct>);
+  const [products, setProducts] = React.useState([] as Array<Product>);
 
   React.useEffect(() => {
     server.getProducts("name", "price")
-      .then(products => setProducts(products as Array<OwnProduct>));
+      .then(products => setProducts(products as Array<Product>));
   }, []);
 
   return (
