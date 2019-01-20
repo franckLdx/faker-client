@@ -5,7 +5,11 @@ const userToken = 'userToken';
 
 let token = storage.getItem(userToken);
 
-const setToken = (newToken: string) => {
+export function getToken() {
+  return token;
+}
+
+function setToken(newToken: string) {
   token = newToken;
   localStorage.setItem(userToken, token);
 }

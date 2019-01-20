@@ -1,11 +1,22 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
 import { Product, Todo } from './model';
+import { getToken } from './data';
 
 export class Server {
   private client = axios.create({
     baseURL: 'https://fakerql.com/graphql'
   });
+
+  constructor() {
+    this.client.interceptors.request.use(function (config) {
+      const token = getToken();
+      if (token !== null) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+      }
+      return config;
+    });
+  }
 
   async register(email: string, password: string) {
     const response = await this.client.post('', {

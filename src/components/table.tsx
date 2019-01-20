@@ -12,5 +12,4 @@ export const Table: React.SFC<TableProps> = ({ columns, data }) => (
     data={data}
     sortable={true}
     size="large"
-    resizeable
   />);
