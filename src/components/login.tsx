@@ -8,8 +8,11 @@ import Button from 'reactstrap/lib/Button';
 import styled from 'styled-components';
 
 const Background = styled.div.attrs({
-  className: "d-flex flex-column align-items-center justify-content-center flex-grow-1"
-})`background: lightGrey`;
+  className: "d-flex flex-column align-items-center justify-content-center flex-grow-1 m-2"
+})`
+  background: lightGrey;
+  border-radius: 30px;
+`;
 
 const width = `
   min-width: 300px;
@@ -25,8 +28,8 @@ const LoginDiv = styled.div.attrs({
   ${width}
 `;
 
-const NotRegisterDiv = styled.div.attrs({
-  className: "d-flex flex-column p-1"
+const RegisterButton = styled(Button).attrs({
+  color: "primary"
 })`
 ${width}
 `;
@@ -68,12 +71,10 @@ const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history
       <LoginDiv>
         <Input placeholder="Login" onChange={onLoginChange} />
         <Input type="password" placeholder="Password" onChange={onPasswordChange} />
-        <Button className="mt-2" color="primary" disabled={!formValid}>Login</Button>
+        <Button className="mt-2" color="primary" disabled={!formValid} onClick={onLogin}>Login</Button>
       </LoginDiv>
       <h5>Not registered Yet?</h5>
-      <NotRegisterDiv>
-        <Button color="primary" disabled={!formValid}>Register</Button>
-      </NotRegisterDiv>
+      <RegisterButton disabled={!formValid} onClick={onRegister}>Register</RegisterButton>
     </Background>
   );
 }
