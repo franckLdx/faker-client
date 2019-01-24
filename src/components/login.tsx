@@ -1,15 +1,35 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-import { Text, Heading } from 'grommet';
-import { Box } from 'grommet/components/Box';
-import { Layer } from 'grommet/components/Layer';
-import { Button } from 'grommet/components/Button';
-import { FormField } from 'grommet/components/FormField';
-import { TextInput } from 'grommet/components/TextInput';
 import { Server, withServer } from '../data/graphql';
 import { useLoginToken } from '../data/data';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { backgroundPage, backgroundComponent } from '../data/theme';
+import Input from 'reactstrap/lib/Input';
+import Button from 'reactstrap/lib/Button';
+import styled from 'styled-components';
+
+const Background = styled.div.attrs({
+  className: "d-flex flex-column align-items-center justify-content-center flex-grow-1"
+})`background: lightGrey`;
+
+const width = `
+  min-width: 300px;
+  max-width: 600px;
+  width: 75%;
+`;
+
+const LoginDiv = styled.div.attrs({
+  className: "d-flex flex-column mb-3 p-1"
+})`
+  background: white;
+  overflow: auto;
+  ${width}
+`;
+
+const NotRegisterDiv = styled.div.attrs({
+  className: "d-flex flex-column p-1"
+})`
+${width}
+`;
 
 interface LoginProps { server: Server }
 
@@ -44,52 +64,17 @@ const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history
   const formValid = login && password;
 
   return (
-    <Layer full plain modal margin="small" >
-      <Box fill direction="column" background={backgroundPage} align="center" justify="center">
-        <Box direction="column" align="center" justify="center" overflow="auto">
-          <Heading level="1">Faker Client</Heading>
-
-          <Box
-            direction="column"
-            width="medium"
-            margin={{ top: "medium" }}
-            pad="small"
-            elevation="medium"
-            background={backgroundComponent}
-          >
-            <FormField label='Login'>
-              <TextInput onChange={onLoginChange} value={login} />
-            </FormField>
-            <FormField label='Password'>
-              <TextInput type="password" onChange={onPasswordChange} value={password} />
-            </FormField>
-            <Button
-              label="Login"
-              primary
-              margin={{ top: "small" }}
-              onClick={onLogin}
-              disabled={!formValid}
-            />
-          </Box>
-
-          <Box
-            direction="column"
-            width="medium"
-            margin={{ top: "medium" }}
-            pad="small"
-            elevation="medium"
-            background="light-1">
-            <Text>Not registered Yet?</Text>
-            <Button
-              label="Register"
-              margin={{ top: "xsmall" }}
-              onClick={onRegister}
-              disabled={!formValid}
-            />
-          </Box>
-        </Box>
-      </Box>
-    </Layer >
+    <Background>
+      <LoginDiv>
+        <Input placeholder="Login" onChange={onLoginChange} />
+        <Input type="password" placeholder="Password" onChange={onPasswordChange} />
+        <Button className="mt-2" color="primary" disabled={!formValid}>Login</Button>
+      </LoginDiv>
+      <h5>Not registered Yet?</h5>
+      <NotRegisterDiv>
+        <Button color="primary" disabled={!formValid}>Register</Button>
+      </NotRegisterDiv>
+    </Background>
   );
 }
 
