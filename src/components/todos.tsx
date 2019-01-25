@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { WithServerProps, withServer } from '../data/graphql';
 import { Todo } from '../data/model';
-import { Draggable } from './draggable';
-import { Table } from './table';
+import { Table } from 'reactstrap';
 
 const TodosRow: React.SFC<WithServerProps> = ({ server }) => {
   const [todos, setTodos] = React.useState([] as Array<Todo>);
@@ -14,23 +13,34 @@ const TodosRow: React.SFC<WithServerProps> = ({ server }) => {
     },
     []
   );
+
   return (
-    <Draggable title="Todos">
-      <Table
-        columns={columns}
-        data={todos}
-      />
-    </Draggable>
+    <div>
+      <h5 className="text-center">Todos</h5>
+      <Table striped bordered responsive>
+        <THeader />
+        <tbody>
+          {todos.map(todo => <TLine key={todo.id} todo={todo} />)}
+        </tbody>
+      </Table >
+    </div>
   );
 }
 
-const completedRenderer = (...args: any[]) => args[0].completed ? 'done' : '';
+const THeader: React.SFC<{}> = () => (
+  <thead>
+    <tr>
+      <th className="text-right">Title</th>
+      <th className="text-left">Completed</th>
+    </tr>
+  </thead>
+);
 
-const columns = [
-  { property: 'title', header: 'Title', search: true },
-  {
-    property: 'completed', header: 'Completed', search: true, render: completedRenderer
-  }
-];
+const TLine: React.SFC<{ todo: Todo }> = ({ todo }) => (
+  <tr>
+    <th className="text-right">{todo.title}</th>
+    <th className="text-left">{todo.completed ? 'yes' : 'no'}</th>
+  </tr>
+);
 
 export const Todos = withServer(TodosRow);

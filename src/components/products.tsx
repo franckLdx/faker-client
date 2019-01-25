@@ -11,23 +11,13 @@ const ProductsRow: React.SFC<WithServerProps> = ({ server }) => {
       .then(products => setProducts(products as Array<Product>));
   }, []);
 
-  React.useCallback(() => (
-    <thead>
-      <tr>
-        <th>name</th>
-        <th>price</th>
-      </tr>
-    </thead>
-  ), []
-  );
-
   return (
     <div>
       <h5 className="text-center">Products</h5>
       <Table striped bordered responsive>
         <THeader />
         <tbody>
-          {products.map(product => <TLine product={product} />)}
+          {products.map(product => <TLine key={product.id} product={product} />)}
         </tbody>
       </Table>
     </div>
