@@ -12,15 +12,12 @@ const ProductsRow: React.SFC<WithServerProps> = ({ server }) => {
   }, []);
 
   return (
-    <div>
-      <h5 className="text-center">Products</h5>
-      <Table striped bordered responsive>
-        <THeader />
-        <tbody>
-          {products.map(product => <TLine key={product.id} product={product} />)}
-        </tbody>
-      </Table>
-    </div>
+    <Table striped bordered responsive>
+      <THeader />
+      <tbody>
+        {products.map(product => <TLine key={product.id} product={product} />)}
+      </tbody>
+    </Table>
   );
 }
 

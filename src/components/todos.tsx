@@ -2,6 +2,7 @@ import * as React from 'react'
 import { WithServerProps, withServer } from '../data/graphql';
 import { Todo } from '../data/model';
 import { Table } from 'reactstrap';
+import styled from 'styled-components';
 
 const TodosRow: React.SFC<WithServerProps> = ({ server }) => {
   const [todos, setTodos] = React.useState([] as Array<Todo>);
@@ -15,15 +16,12 @@ const TodosRow: React.SFC<WithServerProps> = ({ server }) => {
   );
 
   return (
-    <div>
-      <h5 className="text-center">Todos</h5>
-      <Table striped bordered responsive>
-        <THeader />
-        <tbody>
-          {todos.map(todo => <TLine key={todo.id} todo={todo} />)}
-        </tbody>
-      </Table >
-    </div>
+    <Table striped bordered responsive>
+      <THeader />
+      <tbody>
+        {todos.map(todo => <TLine key={todo.id} todo={todo} />)}
+      </tbody>
+    </Table >
   );
 }
 
