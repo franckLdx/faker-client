@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Products } from './products';
-import { Todos } from './todos';
+import { Products } from '../products';
+import { Todos } from '../todos';
 import { Nav, NavLink, TabContent, NavItem } from 'reactstrap';
 import TabPane from 'reactstrap/lib/TabPane';
 import styled from 'styled-components';
 
 const StyledTabPane = styled(TabPane)`
-  height: ${window.innerHeight * .85}px;
+  height: 85vh;
   width: 100%;
   max-width: 300px;
   min-width: 250px;
@@ -14,7 +14,7 @@ const StyledTabPane = styled(TabPane)`
 
 type ActiveTab = "Products" | "Todos";
 
-export const Home: React.SFC<{}> = () => {
+export const SmallScreenHome: React.SFC<{}> = () => {
   const [activeTab, setActiveTab] = React.useState("Products" as ActiveTab);
 
   return (

@@ -6,11 +6,14 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Input from 'reactstrap/lib/Input';
 import Button from 'reactstrap/lib/Button';
 import styled from 'styled-components';
-import Jumbotron from 'reactstrap/lib/Jumbotron';
+import { Container } from 'reactstrap';
 
-const JumbotronContainer = styled.div.attrs({
-  className: "d-flex flex-column align-items-center"
-})``;
+const Form = styled.div.attrs({
+  className: "d-flex flex-column justify-content-center align-items-center"
+})`
+background: lightgrey;
+height: 100%;
+`;
 
 const width = `
   min-width: 300px;
@@ -18,14 +21,18 @@ const width = `
   width: 75%;
 `;
 
-const StyledInput = styled(Input)`
+const LoginDiv = styled.div.attrs({
+  className: "d-flex flex-column mb-3 p-1"
+})`
+  background: white;
+  overflow: auto;
   ${width}
 `;
 
-const StyledButton = styled(Button).attrs({
-  color: "primary",
+const RegisterButton = styled(Button).attrs({
+  color: "primary"
 })`
-${ width}
+${width}
 `;
 
 interface LoginProps { server: Server }
@@ -61,19 +68,17 @@ const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history
   const formValid = login && password;
 
   return (
-    <Jumbotron fluid className="m-0" style={{ height: "100vh" }}>
-      <JumbotronContainer>
-
-        <h1 className="display-3">Faker Client</h1>
-        <StyledInput placeholder="Login" onChange={onLoginChange} />
-        <StyledInput type="password" placeholder="Password" onChange={onPasswordChange} />
-        <StyledButton className="mt-2" disabled={!formValid} onClick={onLogin}>Login</StyledButton>
-
-        <h5 className="mt-3">Not registered Yet?</h5>
-        <StyledButton disabled={!formValid} onClick={onRegister}>Register</StyledButton>
-
-      </JumbotronContainer>
-    </Jumbotron>
+    <Container fuild={"true"}>
+      <Form>
+        <LoginDiv>
+          <Input placeholder="Login" onChange={onLoginChange} />
+          <Input type="password" placeholder="Password" onChange={onPasswordChange} />
+          <Button className="mt-2" color="primary" disabled={!formValid} onClick={onLogin}>Login</Button>
+        </LoginDiv>
+        <h5>Not registered Yet?</h5>
+        <RegisterButton disabled={!formValid} onClick={onRegister}>Register</RegisterButton>
+      </Form>
+    </Container>
   );
 }
 

@@ -1,25 +1,12 @@
 import * as React from 'react';
 import { Routes } from './routes';
-import { Grommet } from 'grommet/components/Grommet';
-import { Box } from 'grommet/components/Box';
 import { ServiceProvider, server } from './data/graphql';
-
-const theme = {
-  global: {
-    font: {
-      family: 'Roboto',
-      size: '14px',
-      height: '20px',
-    },
-  },
-};
+import Container from 'reactstrap/lib/Container';
 
 export const App: React.SFC<{}> = () => (
-  <Grommet theme={theme} full>
+  <>
     <ServiceProvider value={server}>
-      <Box fill>
-        <Routes />
-      </Box>
+      <Routes />
     </ServiceProvider>
-  </Grommet >
+  </>
 );
