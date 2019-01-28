@@ -8,6 +8,11 @@ import Button from 'reactstrap/lib/Button';
 import styled from 'styled-components';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 
+const SurroundDiv = styled.div.attrs({
+  className: "d-flex flex-column justify-content-center bg-secondary"
+})`
+  height: 100vh`;
+
 const JumbotronContainer = styled.div.attrs({
   className: "d-flex flex-column align-items-center"
 })``;
@@ -15,8 +20,7 @@ const JumbotronContainer = styled.div.attrs({
 const width = `
   min-width: 300px;
   max-width: 600px;
-  width: 75%;
-`;
+  width: 75%;`;
 
 const StyledInput = styled(Input)`
   ${width}
@@ -25,8 +29,7 @@ const StyledInput = styled(Input)`
 const StyledButton = styled(Button).attrs({
   color: "primary",
 })`
-${ width}
-`;
+${width}`;
 
 interface LoginProps { server: Server }
 
@@ -61,19 +64,21 @@ const RowLogin: React.SFC<LoginProps & RouteComponentProps> = ({ server, history
   const formValid = login && password;
 
   return (
-    <Jumbotron fluid className="m-0" style={{ height: "100vh" }}>
-      <JumbotronContainer>
+    <SurroundDiv>
+      <Jumbotron fluid className="m-0 px-2">
+        <JumbotronContainer>
 
-        <h1 className="display-3">Faker Client</h1>
-        <StyledInput placeholder="Login" onChange={onLoginChange} />
-        <StyledInput type="password" placeholder="Password" onChange={onPasswordChange} />
-        <StyledButton className="mt-2" disabled={!formValid} onClick={onLogin}>Login</StyledButton>
+          <h1 className="display-4">Faker Client</h1>
+          <StyledInput placeholder="Login" onChange={onLoginChange} />
+          <StyledInput type="password" placeholder="Password" onChange={onPasswordChange} />
+          <StyledButton className="mt-2" disabled={!formValid} onClick={onLogin}>Login</StyledButton>
 
-        <h5 className="mt-3">Not registered Yet?</h5>
-        <StyledButton disabled={!formValid} onClick={onRegister}>Register</StyledButton>
+          <h5 className="mt-3">Not registered Yet?</h5>
+          <StyledButton disabled={!formValid} onClick={onRegister}>Register</StyledButton>
 
-      </JumbotronContainer>
-    </Jumbotron>
+        </JumbotronContainer>
+      </Jumbotron>
+    </SurroundDiv>
   );
 }
 

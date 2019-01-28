@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import React, { useContext } from 'react';
 import { Product, Todo } from './model';
 import { getToken } from './data';
@@ -10,6 +10,9 @@ export class Server {
 
   constructor() {
     this.client.interceptors.request.use(function (config) {
+      if (isAuthenticationRequest(config)) {
+        return config;
+      }
       const token = getToken();
       if (token !== null) {
         config.headers['Authorization'] = `Bearer ${token}`;
@@ -73,6 +76,10 @@ function withServer<T extends WithServerProps>(Component: React.ComponentType<T>
     return <Component {...injectedProps} />
   }
   return wrappedComponent;
+}
+
+function isAuthenticationRequest(config: AxiosRequestConfig) {
+  return config.data.query.indexOf('login(') !== -1 || config.data.query.indexOf('register(') !== -1;
 }
 
 export { ServiceProvider, withServer }
